@@ -1,0 +1,957 @@
+/* Variáveis globais para facilitar temas e manutenção */
+:root {
+  --bg: #0e1116;
+  --panel: #161b22;
+  --panel-2: #1f2630;
+  --text: #e6edf3;
+  --muted: #9aa7b2;
+  --primary: #3b82f6;
+  --primary-2: #2563eb;
+  --accent: #22c55e;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+  --border: #2b3440;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 18px;
+  --transition: all .2s ease;
+}
+
+/* Reset/box-sizing */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #0b0f14, #0f141b 35%, #0e1116 100%);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
+}
+
+/* ========== */
+/* TEMA CLARO */
+/* ===========*/
+body.theme-light {
+  --bg: #f3f4f6;
+  --panel: #ffffff;
+  --panel-2: #f9fafb;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-2: #1d4ed8;
+  --border: #e5e7eb;
+  --shadow: 0 10px 20px rgba(0, 0, 0, .05);
+  background: linear-gradient(180deg, #f3f4f6, #e5e7eb 50%, #f3f4f6 100%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Layout: grid principal com sidebar fixa e conteúdo principal flexível */
+.app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  /* sidebar / main */
+  min-height: 100vh;
+  gap: 0;
+  animation: fadeInUp 0.3s ease;
+  overflow: hidden;
+}
+
+/* Sidebar: navegação e informações do app */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: auto;
+  background: radial-gradient(1000px 400px at -200px -150px, rgba(59, 130, 246, .18), transparent 60%), var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  z-index: 2;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #22c55e, #3b82f6);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.brand h1 {
+  font-size: 18px;
+  margin: 0;
+  letter-spacing: .2px;
+  font-weight: 700;
+}
+
+.brand small {
+  color: var(--muted);
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+}
+
+/* Navegação: itens com hover e estado ativo */
+.nav {
+  margin-top: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--text);
+  border: 1px solid transparent;
+  transition: .2s ease;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  background: var(--panel-2);
+  border-color: var(--border);
+  box-shadow: 0 0 10px rgba(59, 130, 246, .2);
+}
+
+.nav a.active {
+  background: #0f1a2b;
+  border-color: #1e3a8a;
+  color: #bfdbfe;
+  box-shadow: 0 0 10px rgba(59, 130, 246, .4);
+}
+
+body.theme-light .nav a.active {
+  background: #e0e7ff;
+  border-color: #a5b4fc;
+  color: #3730a3;
+}
+
+.nav .badge {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+}
+
+.sidebar .footer {
+  margin-top: 20px;
+  border-top: 1px dashed var(--border);
+  padding-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Botão de Tema */
+.theme-toggle {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  justify-content: center;
+}
+
+#btn-theme-toggle {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s ease;
+}
+
+#btn-theme-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 10px rgba(59, 130, 246, .2);
+}
+
+#icon-sun,
+#icon-moon {
+  transition: var(--transition);
+}
+
+/* Conteúdo principal */
+.main {
+  padding: 22px;
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.main header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.main header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.main header small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 10px;
+  flex: 1 1 320px;
+  box-shadow: var(--shadow);
+}
+
+.search input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.search input::placeholder {
+  color: var(--muted);
+}
+
+.search svg {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+}
+
+/* Botões base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  background: var(--primary);
+  color: white;
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: var(--primary-2);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, .4);
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn.icon {
+  min-width: 16px;
+  min-height: 16px;
+  display: inline-block;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.btn.secondary {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px dashed var(--border);
+  box-shadow: none;
+}
+
+.btn.danger {
+  background: var(--danger);
+}
+
+body.theme-light .btn.secondary:hover,
+body.theme-light .btn.ghost:hover {
+  background: var(--panel-2);
+}
+
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.cards {
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  display: grid;
+  gap: 16px;
+}
+
+.dashboard {
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+}
+
+@media (max-width: 1100px) {
+  .app {
+    grid-template-columns: 84px 1fr;
+  }
+
+  .brand h1,
+  .brand small {
+    display: none;
+  }
+
+  .nav .label {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 580px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cartões e componentes */
+.card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .0)), var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+
+.card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(59, 130, 246, .2);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+
+.card .value {
+  font-size: 24px;
+  font-weight: 800;
+  margin-top: 6px;
+}
+
+.trend {
+  font-size: 12px;
+  color: #a7f3d0;
+}
+
+.trend.down {
+  color: #fecaca;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toolbar .spacer {
+  flex: 1;
+}
+
+/* Tabela */
+.table-wrap {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+  
+}
+
+th,
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+th {
+  background: var(--panel-2);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  font-size: 12px;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+tr:hover td {
+  background: rgba(255, 255, 255, .02);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Formulários */
+.form {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+
+.field {
+  grid-column: span 4;
+  display: grid;
+  gap: 6px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 10px rgba(59, 130, 246, .2);
+}
+
+/* Toast */
+#toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: none;
+  color: var(--text);
+  font-size: 14px;
+  z-index: 10;
+  animation: fadeInUp 0.3s ease;
+}
+
+/* Badges */
+.badge-soft {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, .15);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, .25);
+}
+
+.badge-warn {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, .15);
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, .25);
+}
+
+/* Estado vazio (empty) */
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+/* Animações */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ... (todo o CSS anterior continua igual até aqui) ... */
+
+/* Animações */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================= */
+/* ESTILOS PARA AS NOVAS TELAS E COMPONENTES */
+/* ========================================= */
+
+/* Abas (Tabs) para navegação interna, como em Vendas */
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.tab {
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  color: var(--muted);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+  position: relative;
+  bottom: -1px;
+  /* Alinha com a borda inferior */
+}
+
+.tab.active {
+  background: var(--panel);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.tab:not(.active):hover {
+  background: var(--panel-2);
+  color: var(--text);
+}
+
+
+.vendas-grid,
+.producao-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+@media(max-width: 1200px) {
+
+  .vendas-grid,
+  .producao-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prod-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Linha principal da lista de produtos (visível) */
+.prod-row {
+  display: grid;
+  /* Ícone | Nome | Código | Preço | Estoque | Ações */
+  grid-template-columns: 40px 3fr 1.5fr 1fr 1fr 2fr;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.prod-row.search-result {
+  grid-template-columns: 2fr 1fr;
+  /* Nome | Preço */
+}
+
+/* Estilo para o cabeçalho da lista */
+.prod-row.header {
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom-width: 2px;
+  padding-bottom: 10px;
+  cursor: default;
+}
+
+/* Efeito ao passar o mouse sobre as linhas de dados */
+.prod-row:not(.header):hover {
+  background-color: var(--panel-2);
+}
+
+/* Detalhes ocultos (painel expansível) */
+.prod-details {
+  display: none; /* Começa oculto por padrão */
+  padding: 20px;
+  background-color: var(--panel-2);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Layout em grid para os detalhes, deixando-os organizados */
+.prod-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.prod-details-grid .detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.prod-details-grid .detail-item label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+/* Estilo para o separador entre os formulários de venda */
+#sales-container hr {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: 0;
+}
+
+/* Estilos para a lista de pigmentos na tela de produção */
+#lista-pigmentos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pigmento-row {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  grid-template-columns: 4fr 1fr 1fr 1fr;
+  /* Nome, Valor, Total, Preço */
+}
+
+.pigmento-row input {
+  padding: 8px;
+}
+
+/* CLASSE MODIFICADORA: Contém APENAS o que é diferente */
+/* Ela sobrescreve apenas o grid-template-columns quando a linha está na tela de Fórmulas */
+.pigmento-row.pigmento-row--formula {
+  grid-template-columns: 3fr 1.5fr 1fr 1.5fr 1.5fr;
+}
+
+/* Alinhamento à direita para os campos de valor, ação e botões */
+.pigmento-valor,
+.pigmento-acao,
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Layout em grid para a tela de criação de fórmulas */
+.formula-grid {
+  display: grid;
+  /* A coluna da esquerda (formulário) ocupará 2x o espaço da da direita (busca) */
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+/* Em telas menores, as colunas ficam uma sobre a outra */
+@media(max-width: 1200px) {
+  .formula-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reaproveitando o grid de vendas para a tela de produção */
+.vendas-grid,
+.producao-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+@media(max-width: 1200px) {
+
+  .vendas-grid,
+  .producao-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prod-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Linha principal do histórico (visível) */
+.hist-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 120px 140px 120px;
+  /* Seta | Data | Nome | Preço | Estado | Ações */
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.hist-row.header {
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom-width: 2px;
+  padding-bottom: 10px;
+  cursor: default;
+}
+
+.hist-row:hover {
+  background-color: var(--panel-2);
+}
+
+/* Seta para expandir/recolher */
+.toggle-details {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.toggle-details.expanded {
+  transform: rotate(90deg);
+}
+
+/* Detalhes ocultos (expansível) */
+.hist-details {
+  display: none;
+  /* Começa oculto */
+  padding: 16px;
+  background-color: var(--panel-2);
+}
+
+.hist-details table {
+  min-width: 0;
+  /* Remove a largura mínima para tabelas aninhadas */
+}
+
+/* CSS PARA A LISTA DE FÓRMULAS */
+
+/* Define a linha da lista de fórmulas como um grid de 5 colunas */
+.formula-row {
+  display: grid;
+  /* Nome | Código | Base | Nº Pigmentos | Ações */
+  grid-template-columns: 3fr 1fr 1fr 1fr 2fr;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Estilo para o cabeçalho da lista */
+.formula-row.header {
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom-width: 2px;
+  padding-bottom: 10px;
+}
+
+/* Hover effect para as linhas de dados */
+.formula-row:not(.header):hover {
+  background-color: var(--panel-2);
+}
+
+@media (max-width: 1300px) {
+  .formula-row {
+    grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+    /* Ajusta as colunas para telas menores */
+  }
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    text-align: center;
+  }
+  .actions .btn {
+    width: 100%;
+  }
+}
+
+/* Posiciona o container do campo do cliente para podermos ancorar os resultados */
+.field.autocomplete-container {
+  position: relative;
+}
+
+/* A lista de resultados que aparece sobrepondo a tela */
+.autocomplete-results {
+  position: absolute;
+  top: 100%; /* Aparece logo abaixo do campo de input */
+  left: 0;
+  right: 0;
+  background-color: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 0 0 10px 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10; /* Garante que fique sobre os outros elementos */
+}
+
+/* Cada item na lista de resultados */
+.autocomplete-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+}
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+.autocomplete-item:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Estilo para as barras de pesquisa nas telas de listagem */
+.search-toolbar {
+  padding: 12px;
+  margin-bottom: 16px;
+}
+.search-toolbar input {
+  width: 100%;
+}
+
+
+/* TELA DE REGISTRO DE PEDIDOS */
+
+.pedidos-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+@media(max-width: 1200px){
+  .pedidos-grid {
+    grid-template-columns: 1fr;
+  }
+}
