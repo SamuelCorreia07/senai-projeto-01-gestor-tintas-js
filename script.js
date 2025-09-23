@@ -2040,8 +2040,8 @@ addRoute('pedidos', () => {
 
     root.innerHTML = `
         <div class="tabs">
-            <a href="#/pedidos/lista" class="tab ${subView === 'lista' ? 'active' : ''}">Pedidos</a>
             <a href="#/pedidos/registrar" class="tab ${subView === 'registrar' ? 'active' : ''}">Registrar Pedido de Produtos</a>
+            <a href="#/pedidos/lista" class="tab ${subView === 'lista' ? 'active' : ''}">Pedidos</a>
         </div>
         <div id="pedidos-content"></div>
     `;
