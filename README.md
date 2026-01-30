@@ -1,3 +1,6 @@
+### Observação: 
+Esse projeto é um protótipo
+
 # Gestor Tintas
 Um sistema integrado para gestão de lojas de tintas, com foco em pequenos negócios. O projeto visa unificar o controle de vendas, estoque e o processo de produção de tintas personalizadas, utilizando conceitos de IoT para garantir precisão e eficiência.
 
@@ -105,14 +108,16 @@ Armazenamento de Dados: localStorage do navegador.
 IoT com ESP32 e protocolo MQTT para comunicação com a balança.
 
 ## Cronograma do Projeto
-Início Previsto: 19/08/2023
+Início Previsto: 19/08/2025
 
-Término Previsto: 26/06/2024
+Término Previsto: 26/06/2026
 
 Fase Atual: Desenvolvimento do Front-End e lógicas de negócio.
 
-## Como Executar o Projeto (via servidor)
-Este projeto deve ser executado em um servidor HTTP (abrir o arquivo index.html diretamente via file:// não é suportado).
+## Como Executar o Projeto
+O projeto pode ser acessado via github pages: https://samuelcorreia07.github.io/senai-projeto-01-gestor-tintas-js/
+
+Este projeto pode ser executado também em um servidor HTTP (abrir o arquivo index.html diretamente via file:// não é suportado).
 
 Pré-requisitos (qualquer uma das opções abaixo):
 - VS Code + extensão Live Server
